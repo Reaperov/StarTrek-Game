@@ -1,5 +1,6 @@
 import pygame
 import random
+from bullet import Bullet
 
 class Baddie():
 
@@ -39,6 +40,10 @@ class Baddie():
     def setAlive(self,alive):
         self.alive = alive
     
+    def fire(self,width,height,color):
+        return Bullet(width,height,(self.x + self.width + 10) , self.y + 30, color)
+
+
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
         #rect = pygame.Rect( self.x, self.y, self.width, self.height )
