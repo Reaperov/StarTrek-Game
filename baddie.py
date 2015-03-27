@@ -5,7 +5,7 @@ from bullet import Bullet
 class Baddie():
 
     def __init__(self,width,height,x,y,color):
-        self.image = pygame.image.load("KlingonBOP.png")
+        self.image = pygame.image.load("Untitled-2.png")
         self.width  = 50
         self.height = 50
         self.x      = x
@@ -18,9 +18,9 @@ class Baddie():
         return
 
     def tick(self,back_wall,upper_wall,lower_wall):
-        self.new_x = self.x - self.speed
-        self.new_y = self.y + random.randint(-1,1)
-        if self.new_x < back_wall:
+        self.new_y = self.y + self.speed
+        self.new_x = self.x - random.randint(-1,1)
+        if self.new_y < back_wall:
             self.setAlive(False)
         else:
             self.x = self.new_x

@@ -6,7 +6,7 @@ pygame.mixer.init()
 class Spaceship():
 
     def __init__(self,width,height,x,y,color):
-        self.image = pygame.image.load("USS Enterprise.png") 
+        self.image = pygame.image.load("X-Wing.png") 
         self.width  = 26
         self.height = 50
         self.x      = x
