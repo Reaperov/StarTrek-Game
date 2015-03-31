@@ -17,6 +17,10 @@ class Bullet():
         if self.hitRectangle(x, y, w, h):
             self.setAlive(False)
             self.hit = True
+        if self.hit == True:
+            hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
+            hitsound.play()
+
 
     def checkBackWall(self,back_wall):
         if (self.x + self.width) > back_wall:
@@ -24,7 +28,7 @@ class Bullet():
         return
 
     def moveBullet(self):
-        self.x += self.speed
+        self.y -= self.speed
         return
 
     def setAlive(self,alive):

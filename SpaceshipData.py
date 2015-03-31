@@ -20,9 +20,9 @@ class SpaceshipData:
         self.spaceship = Spaceship(self.spaceship_width,self.spaceship_height,0,(self.height / 2) - 10, (255,255,255))
         self.spaceship_speed = 5
         self.bullets = []
-        self.bullet_width = 80
-        self.bullet_height = 2
-        self.bullet_color = (100,100,255)
+        self.bullet_width = 2
+        self.bullet_height = 80
+        self.bullet_color = (255,50,50)
         self.baddies = []
         self.baddie_width = 20
         self.baddie_height = 20
@@ -101,8 +101,9 @@ class SpaceshipData:
         return
 
     def addBaddie(self):
-        new_baddie = Baddie( self.baddie_width, self.baddie_height, self.width, random.randint(0,(self.height-self.baddie_height)), self.baddie_color )
-        self.baddies.append( new_baddie )
+        x_point = 300 + random.randint(-250, 250)
+        new_baddie = Baddie(self.baddie_width, self.baddie_height, x_point, 0, self.baddie_color)
+        self.baddies.append(new_baddie)
                    
         return
 

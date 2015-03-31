@@ -19,16 +19,13 @@ class Baddie():
 
     def tick(self,back_wall,upper_wall,lower_wall):
         self.new_y = self.y + self.speed
-        self.new_x = self.x - random.randint(-1,1)
-        if self.new_y < back_wall:
+        self.new_x = self.x - random.randint(-1, 1)
+        if self.new_y >= lower_wall:
             self.setAlive(False)
         else:
-            self.x = self.new_x
-        if self.new_y < upper_wall:
-            self.new_y = upper_wall
-        elif self.new_y + self.height > lower_wall:
-            self.new_y = lower_wall - self.height
+            self.y = self.new_y
         self.y = self.new_y
+        self.x = self.new_x
         return self.alive
 
     def getAlive(self):

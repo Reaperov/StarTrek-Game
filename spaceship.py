@@ -20,6 +20,9 @@ class Spaceship():
         if self.hitRectangle(x, y, w, h):
             self.setAlive(False)
             self.hit = True
+        if self.hit == True:
+            hitsound = pygame.mixer.Sound("R2HIT.wav")
+            hitsound.play()
 
     def setAlive(self,alive):
         self.alive = alive
@@ -36,6 +39,7 @@ class Spaceship():
     def getHit(self):
         return self.hit
 
+
     def moveLeft(self, dx):
         self.x -= dx
         # check the wall
@@ -45,9 +49,6 @@ class Spaceship():
 
     def moveRight(self, dx, upper_limit):
         self.x += dx
-        # check the wall
-        if self.x > upper_limit:
-            self.x = upper_limit
         return
 
     def moveUp(self, dy):
@@ -65,9 +66,9 @@ class Spaceship():
         return
 
     def fire(self,width,height,color):
-        firesound = pygame.mixer.Sound("tos-photon-torpedo-1.ogg")
+        firesound = pygame.mixer.Sound("REB-LS-2.wav")
         firesound.play()
-        return Bullet(width,height,(self.x + self.width + 10) , self.y + 30, color)
+        return Bullet(width,height,(self.x + self.width + 33) , self.y - 30, color)
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
