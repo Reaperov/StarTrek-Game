@@ -65,7 +65,6 @@ class SpaceshipData:
                 bullet.checkHitBaddie(x,y,w,h)
                 if bullet.getHit():
                     bullet.setAlive(False)
-                    baddie.setAlive(False)
                     bullet.hit = False
                     self.score += 1
                 

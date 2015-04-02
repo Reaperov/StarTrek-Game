@@ -15,6 +15,7 @@ class Baddie():
         self.speed  = 3
         self.color  = color
         self.alive  = True
+        self.life = 2
         return
 
     def tick(self,back_wall,upper_wall,lower_wall):
@@ -36,10 +37,6 @@ class Baddie():
 
     def setAlive(self,alive):
         self.alive = alive
-    
-    def fire(self,width,height,color):
-        return Bullet(width,height,(self.x + self.width + 10) , self.y + 30, color)
-
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))

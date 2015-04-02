@@ -14,6 +14,7 @@ class Spaceship():
         self.color  = color
         self.alive  = True
         self.hit    = False
+        self.shot_number = 0
         return
 
     def checkHitBaddie(self,x,y,w,h):
@@ -68,7 +69,12 @@ class Spaceship():
     def fire(self,width,height,color):
         firesound = pygame.mixer.Sound("REB-LS-2.wav")
         firesound.play()
-        return Bullet(width,height,(self.x + self.width + 33) , self.y - 30, color)
+        if self.shot_number % 2 == 0:
+            offset = 5
+        else:
+            offset = 59
+        self.shot_number += 1
+        return Bullet(width,height, self.x + offset, self.y - 50, color)
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
