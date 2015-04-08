@@ -1,5 +1,6 @@
 import pygame
-
+from baddie import Baddie
+baddie = Baddie
 class Bullet():
 
     def __init__(self,width,height,x,y,color):
@@ -19,7 +20,7 @@ class Bullet():
             self.hit = True
         if self.hit == True:
             hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
-            hitsound.play()
+            
 
 
     def checkBackWall(self,back_wall):

@@ -67,7 +67,9 @@ class SpaceshipData:
                     bullet.setAlive(False)
                     bullet.hit = False
                     self.score += 1
-                
+                    baddie.life -= 1
+                if baddie.life <= 0:
+                    baddie.setAlive(False)
         
 
         for baddie in self.baddies:

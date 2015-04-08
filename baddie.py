@@ -1,6 +1,5 @@
 import pygame
 import random
-from bullet import Bullet
 
 class Baddie():
 
