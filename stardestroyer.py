@@ -1,12 +1,9 @@
-import pygame
-import random
-
-class Baddie():
+class Destroyer():
 
     def __init__(self,width,height,x,y,color):
-        self.image = pygame.image.load("untitled-2.png")
-        self.width  = 50
-        self.height = 50
+        self.image = pygame.image.load("star_destroyer.png")
+        self.width  = 200
+        self.height = 200
         self.x      = x
         self.y      = y
         self.new_x  = x
@@ -14,7 +11,7 @@ class Baddie():
         self.speed  = 3
         self.color  = color
         self.alive  = True
-        self.life = 2
+        self.life = 50
         return
 
     def tick(self,back_wall,upper_wall,lower_wall):
@@ -42,4 +39,3 @@ class Baddie():
         #rect = pygame.Rect( self.x, self.y, self.width, self.height )
         #pygame.draw.rect(surface, self.color, rect)
         return
-        

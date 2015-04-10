@@ -2,7 +2,8 @@ import pygame
 from bullet import Bullet
 
 pygame.mixer.init()
-
+flysound = pygame.mixer.Sound("XWENGLP.wav")
+flysound.play(-1)
 class Spaceship():
 
     def __init__(self,width,height,x,y,color):

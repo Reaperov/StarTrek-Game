@@ -19,7 +19,9 @@ class Bullet():
             self.setAlive(False)
             self.hit = True
         if self.hit == True:
-            hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
+            bullet_hitsound = pygame.mixer.Sound("EX-SM-2.wav")
+            bullet_hitsound.play()
+            #bullet hitsound
             
 
 

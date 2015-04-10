@@ -2,6 +2,7 @@ import pygame
 import random
 from spaceship import Spaceship
 from baddie import Baddie
+from stardestroyer import Destroyer
 spaceship = Spaceship
 gameover = False
 
@@ -66,11 +67,12 @@ class SpaceshipData:
                 if bullet.getHit():
                     bullet.setAlive(False)
                     bullet.hit = False
-                    self.score += 1
                     baddie.life -= 1
                 if baddie.life <= 0:
+                    hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
+                    hitsound.play()
+                    self.score += 1
                     baddie.setAlive(False)
-        
 
         for baddie in self.baddies:
             if not baddie.alive:
@@ -108,6 +110,10 @@ class SpaceshipData:
                    
         return
 
+    def addDestroyer(self):
+        x_point = 300
+        new_destroyer = Destroyer(self.destroyer_width, self.destroyer_height, x_point, 0, self.destroyer_color)
+        self.destroyer.append(new_destroyer)
     def draw(self,surface):
         rect = pygame.Rect(0,0,self.width,self.height)
         surface.fill((0,0,0),rect )
