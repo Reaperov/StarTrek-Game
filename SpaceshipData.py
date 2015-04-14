@@ -24,6 +24,10 @@ class SpaceshipData:
         self.bullet_width = 2
         self.bullet_height = 80
         self.bullet_color = (255,50,50)
+        self.destroyer = []
+        self.destroyer_width = 200
+        self.destroyer_height = 200
+        self.destroyer_color = (255,0,0)
         self.baddies = []
         self.baddie_width = 20
         self.baddie_height = 20
@@ -103,17 +107,23 @@ class SpaceshipData:
             
         return
 
-    def addBaddie(self):
-        x_point = 300 + random.randint(-250, 250)
-        new_baddie = Baddie(self.baddie_width, self.baddie_height, x_point, 0, self.baddie_color)
-        self.baddies.append(new_baddie)
-                   
-        return
 
     def addDestroyer(self):
         x_point = 300
         new_destroyer = Destroyer(self.destroyer_width, self.destroyer_height, x_point, 0, self.destroyer_color)
         self.destroyer.append(new_destroyer)
+        print ("Destroyer")
+        return
+
+    def addBaddie(self):
+        x_point = 300 + random.randint(-250, 250)
+        new_baddie = Baddie(self.baddie_width, self.baddie_height, x_point, 0, self.baddie_color)
+        self.baddies.append(new_baddie)
+        print ("TIE")  
+        return
+
+
+
     def draw(self,surface):
         rect = pygame.Rect(0,0,self.width,self.height)
         surface.fill((0,0,0),rect )

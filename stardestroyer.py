@@ -1,3 +1,6 @@
+import pygame
+import random
+
 class Destroyer():
 
     def __init__(self,width,height,x,y,color):
