@@ -55,8 +55,7 @@ class SpaceshipData:
 
         if self.score == 50:
             self.addDestroyer()
-            if self.destroyers >= 1:
-                
+
 
         for bullet in self.bullets:
             bullet.moveBullet()
