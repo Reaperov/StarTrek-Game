@@ -26,6 +26,14 @@ class Spaceship():
             hitsound = pygame.mixer.Sound("R2HIT.wav")
             hitsound.play()
 
+    def checkHitDestroyer(self,x,y,w,h):
+        if self.hitRectangle(x, y, w, h):
+            self.setAlive(False)
+            self.hit = True
+        if self.hit == True:
+            hitsound = pygame.mixer.Sound("R2HIT.wav")
+            hitsound.play()
+
     def setAlive(self,alive):
         self.alive = alive
         return

@@ -20,6 +20,8 @@ class Destroyer():
     def tick(self,back_wall,upper_wall,lower_wall):
         self.new_y = self.y + self.speed
         self.new_x = self.x - random.randint(-1, 1)
+        if self.new_y >= 10:
+            self.speed = 0
         if self.new_y >= lower_wall:
             self.setAlive(False)
         else:

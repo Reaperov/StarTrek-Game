@@ -1,5 +1,7 @@
 import pygame
 from baddie import Baddie
+from stardestroyer import Destroyer
+destroyer = Destroyer
 baddie = Baddie
 class Bullet():
 
@@ -22,7 +24,15 @@ class Bullet():
             bullet_hitsound = pygame.mixer.Sound("EX-SM-2.wav")
             bullet_hitsound.play()
             #bullet hitsound
-            
+         
+    def checkHitDestroyer(self,x,y,w,h):
+        if self.hitRectangle(x, y, w, h):
+            self.setAlive(False)
+            self.hit = True
+        if self.hit == True:
+            bullet_hitsound = pygame.mixer.Sound("EX-SM-2.wav")
+            bullet_hitsound.play()
+            #bullet hitsound   
 
 
     def checkBackWall(self,back_wall):

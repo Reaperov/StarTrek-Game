@@ -24,7 +24,7 @@ class SpaceshipData:
         self.bullet_width = 2
         self.bullet_height = 80
         self.bullet_color = (255,50,50)
-        self.destroyer = []
+        self.destroyers = []
         self.destroyer_width = 200
         self.destroyer_height = 200
         self.destroyer_color = (255,0,0)
@@ -53,12 +53,20 @@ class SpaceshipData:
         if random.randint(1, self.frame_rate/2) == 1:
             self.addBaddie()
 
+        if self.score == 50:
+            self.addDestroyer()
+            if self.destroyers >= 1:
+                
+
         for bullet in self.bullets:
             bullet.moveBullet()
             bullet.checkBackWall(self.width)
                 
         for baddie in self.baddies:
             baddie.tick(0,0,self.height)
+
+        for destroyer in self.destroyers:
+            destroyer.tick(0,0,self.height)
 
         for bullet in self.bullets:
             if not bullet.alive:
@@ -75,8 +83,36 @@ class SpaceshipData:
                 if baddie.life <= 0:
                     hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
                     hitsound.play()
-                    self.score += 1
+                    self.score += 50
                     baddie.setAlive(False)
+            for destroyer in self.destroyers:
+                if not destroyer.alive:
+                    continue
+                x,y,w,h = destroyer.getDimensions()
+                bullet.checkHitDestroyer(x,y,w,h)
+                if bullet.getHit():
+                    bullet.setAlive(False)
+                    bullet.hit = False
+                    destroyer.life -= 1
+                if destroyer.life <= 0:
+                    hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
+                    hitsound.play()
+                    self.score += 40
+                    destroyer.setAlive(False)
+
+        for destroyer in self.destroyers:
+            if not destroyer.alive:
+                   continue
+            x,y,w,h = destroyer.getDimensions()
+            self.spaceship.checkHitDestroyer(x,y,w,h)
+            if self.spaceship.getHit():
+                self.spaceship.setAlive(False)
+                destroyer.setAlive(False)
+                self.spaceship.hit = False
+                self.life -= 1
+                if self.life <= 0:
+                    pygame.quit()
+                    exit()
 
         for baddie in self.baddies:
             if not baddie.alive:
@@ -95,15 +131,20 @@ class SpaceshipData:
 
         live_bullets = []
         live_baddies = []
+        live_destroyers = []
         for bullet in self.bullets:
             if bullet.alive:
                 live_bullets.append(bullet)
         for baddie in self.baddies:
             if baddie.alive:
                 live_baddies.append(baddie)
+        for destroyer in self.destroyers:
+            if destroyer.alive:
+                live_destroyers.append(destroyer)
       
         self.bullets = live_bullets
         self.baddies = live_baddies
+        self.destroyers = live_destroyers
             
         return
 
@@ -111,15 +152,15 @@ class SpaceshipData:
     def addDestroyer(self):
         x_point = 300
         new_destroyer = Destroyer(self.destroyer_width, self.destroyer_height, x_point, 0, self.destroyer_color)
-        self.destroyer.append(new_destroyer)
-        print ("Destroyer")
+        self.destroyers.append(new_destroyer)
+        #print ("Destroyer")
         return
 
     def addBaddie(self):
         x_point = 300 + random.randint(-250, 250)
         new_baddie = Baddie(self.baddie_width, self.baddie_height, x_point, 0, self.baddie_color)
         self.baddies.append(new_baddie)
-        print ("TIE")  
+        #print ("TIE")  
         return
 
 
@@ -132,6 +173,8 @@ class SpaceshipData:
             bullet.draw(surface)
         for baddie in self.baddies:
             baddie.draw(surface)
+        for destroyer in self.destroyers:
+            destroyer.draw(surface)
         self.drawTextLeft(surface, str(self.score), (0, 255, 0), 50, 50, self.font)
         self.drawTextRight(surface, str(self.life), (0, 255, 0), 500, 50, self.font)
         return     
