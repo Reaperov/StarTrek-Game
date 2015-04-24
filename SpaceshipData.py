@@ -5,7 +5,7 @@ from baddie import Baddie
 from stardestroyer import Destroyer
 spaceship = Spaceship
 gameover = False
-
+adddestroyer = False
 class SpaceshipData:
 
     def __init__(self,width,height,frame_rate):
@@ -54,7 +54,12 @@ class SpaceshipData:
             self.addBaddie()
 
         if self.score == 50:
-            self.addDestroyer()
+            adddestroyer = True
+            if adddestroyer == True:
+                self.addDestroyer()
+            if self.destroyers > 0:
+                adddestroyer = False
+
 
 
         for bullet in self.bullets:
