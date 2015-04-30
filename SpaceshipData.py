@@ -3,9 +3,11 @@ import random
 from spaceship import Spaceship
 from baddie import Baddie
 from stardestroyer import Destroyer
+from powerup import Powerup
 spaceship = Spaceship
+powerup = Powerup
 gameover = False
-adddestroyer = False
+adddestroyer = True
 class SpaceshipData:
 
     def __init__(self,width,height,frame_rate):
@@ -24,6 +26,10 @@ class SpaceshipData:
         self.bullet_width = 2
         self.bullet_height = 80
         self.bullet_color = (255,50,50)
+        self.powerups = []
+        self.powerup_width = 20
+        self.powerup_height = 20
+        self.powerup_color = (50,255,50)
         self.destroyers = []
         self.destroyer_width = 200
         self.destroyer_height = 200
@@ -33,6 +39,7 @@ class SpaceshipData:
         self.baddie_height = 20
         self.baddie_color = (255,0,0)
         self.score = 0
+        self.baddie_kills = 0
         self.life = 5
         return
 
@@ -53,6 +60,10 @@ class SpaceshipData:
         if random.randint(1, self.frame_rate/2) == 1:
             self.addBaddie()
 
+        if self.baddie_kills == 10:
+            self.addPowerup()
+            self.baddie_kills == 0
+
         if self.score == 50:
             adddestroyer = True
             if adddestroyer == True:
@@ -68,6 +79,9 @@ class SpaceshipData:
                 
         for baddie in self.baddies:
             baddie.tick(0,0,self.height)
+
+        for powerup in self.powerups:
+            powerup.tick(0,0,self.height)
 
         for destroyer in self.destroyers:
             destroyer.tick(0,0,self.height)
@@ -87,7 +101,9 @@ class SpaceshipData:
                 if baddie.life <= 0:
                     hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
                     hitsound.play()
-                    self.score += 50
+                    self.score += 1
+                    self.baddie_kills += 1
+                    print self.baddie_kills
                     baddie.setAlive(False)
             for destroyer in self.destroyers:
                 if not destroyer.alive:
@@ -103,6 +119,21 @@ class SpaceshipData:
                     hitsound.play()
                     self.score += 40
                     destroyer.setAlive(False)
+            for powerup in self.powerups:
+                if not powerup.alive:
+                    continue
+                x,y,w,h = powerup.getDimensions()
+                bullet.checkHitDestroyer(x,y,w,h)
+                if bullet.getHit():
+                    bullet.setAlive(False)
+                    bullet.hit = False
+                    powerup.life -= 1
+                if powerup.life <= 0:
+                    hitsound = pygame.mixer.Sound("EX-PHS-7.wav")
+                    hitsound.play()
+                    self.score += 0
+                    powerup.setAlive(False)
+
 
         for destroyer in self.destroyers:
             if not destroyer.alive:
@@ -111,7 +142,7 @@ class SpaceshipData:
             self.spaceship.checkHitDestroyer(x,y,w,h)
             if self.spaceship.getHit():
                 self.spaceship.setAlive(False)
-                destroyer.setAlive(False)
+                destroyer.life -= 10
                 self.spaceship.hit = False
                 self.life -= 1
                 if self.life <= 0:
@@ -132,10 +163,21 @@ class SpaceshipData:
                     pygame.quit()
                     exit()
 
+        for powerup in self.powerups:
+            if not powerup.alive:
+                   continue
+            x,y,w,h = powerup.getDimensions()
+            self.spaceship.checkHitPowerup(x,y,w,h)
+            if self.spaceship.getHit():
+                self.spaceship.setAlive(False)
+                powerup.setAlive(False)
+                self.spaceship.hit = False
+                self.life += 5
 
         live_bullets = []
         live_baddies = []
         live_destroyers = []
+        live_powerups = []
         for bullet in self.bullets:
             if bullet.alive:
                 live_bullets.append(bullet)
@@ -145,10 +187,14 @@ class SpaceshipData:
         for destroyer in self.destroyers:
             if destroyer.alive:
                 live_destroyers.append(destroyer)
+        for powerup in self.powerups:
+            if powerup.alive:
+                live_powerups.append(powerup)
       
         self.bullets = live_bullets
         self.baddies = live_baddies
         self.destroyers = live_destroyers
+        self.powerups = live_powerups
             
         return
 
@@ -167,7 +213,12 @@ class SpaceshipData:
         #print ("TIE")  
         return
 
-
+    def addPowerup(self):
+        x_point = 300 + random.randint(-250, 250)
+        new_powerup = Powerup(self.powerup_width, self.powerup_height, x_point, 0, self.powerup_color)
+        self.powerup.append(new_powerup)
+        print ("upgrade")  
+        return
 
     def draw(self,surface):
         rect = pygame.Rect(0,0,self.width,self.height)
@@ -179,6 +230,8 @@ class SpaceshipData:
             baddie.draw(surface)
         for destroyer in self.destroyers:
             destroyer.draw(surface)
+        for powerup in self.powerups:
+            powerup.draw(surface)
         self.drawTextLeft(surface, str(self.score), (0, 255, 0), 50, 50, self.font)
         self.drawTextRight(surface, str(self.life), (0, 255, 0), 500, 50, self.font)
         return     
