@@ -5,7 +5,6 @@ from baddie import Baddie
 from stardestroyer import Destroyer
 from powerup import Powerup
 spaceship = Spaceship
-powerup = Powerup
 gameover = False
 adddestroyer = True
 class SpaceshipData:
@@ -61,14 +60,15 @@ class SpaceshipData:
             self.addBaddie()
 
         if self.baddie_kills == 10:
+            print("your mom", len(self.powerups))
             self.addPowerup()
+            print("again your mom", len(self.powerups))
             self.baddie_kills == 0
 
         if self.score == 50:
             adddestroyer = True
             if adddestroyer == True:
                 self.addDestroyer()
-            if self.destroyers > 0:
                 adddestroyer = False
 
 
@@ -216,7 +216,7 @@ class SpaceshipData:
     def addPowerup(self):
         x_point = 300 + random.randint(-250, 250)
         new_powerup = Powerup(self.powerup_width, self.powerup_height, x_point, 0, self.powerup_color)
-        self.powerup.append(new_powerup)
+        self.powerups.append(new_powerup)
         print ("upgrade")  
         return
 
@@ -231,6 +231,7 @@ class SpaceshipData:
         for destroyer in self.destroyers:
             destroyer.draw(surface)
         for powerup in self.powerups:
+            print("this is your mom")
             powerup.draw(surface)
         self.drawTextLeft(surface, str(self.score), (0, 255, 0), 50, 50, self.font)
         self.drawTextRight(surface, str(self.life), (0, 255, 0), 500, 50, self.font)
